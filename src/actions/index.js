@@ -152,6 +152,10 @@ export const saveProject = () => async (dispatch, getState) => {
   );
 };
 
+export const updateAppTheme = theme => {
+  return { type: types.APP_UPDATE_THEME, theme };
+};
+
 export const setTool = tool => {
   return { type: types.SET_TOOL, tool };
 };

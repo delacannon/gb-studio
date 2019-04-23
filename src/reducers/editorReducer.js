@@ -26,6 +26,7 @@ import {
   REMOVE_TRIGGER,
   REMOVE_TRIGGER_AT,
   EDIT_PLAYER_START_AT,
+  APP_UPDATE_THEME,
   EDIT_UI
 } from "../actions/actionTypes";
 
@@ -161,6 +162,12 @@ export default function editor(state = initialState.editor, action) {
         ...state,
         scene: "",
         type: "world"
+      };
+    }
+    case APP_UPDATE_THEME: {
+      return {
+        ...state,
+        appTheme: !state.appTheme
       };
     }
     case EDIT_UI: {

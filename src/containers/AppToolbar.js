@@ -14,7 +14,9 @@ import {
   PlusIcon,
   MinusIcon,
   FolderIcon,
-  LoadingIcon
+  LoadingIcon,
+  MoonIcon,
+  SunIcon
 } from "../components/library/Icons";
 import { connect } from "react-redux";
 import * as actions from "../actions";
@@ -38,6 +40,11 @@ class AppToolbar extends Component {
     e.preventDefault();
     e.stopPropagation();
     this.props.zoomIn(this.props.section);
+  };
+
+  onUpdateTheme = e => {
+    e.preventDefault();
+    this.props.updateAppTheme(this.props.appTheme);
   };
 
   onZoomOut = e => {
@@ -65,7 +72,17 @@ class AppToolbar extends Component {
   };
 
   render() {
-    const { name, section = "world", zoom, showZoom, running, modified } = this.props;
+    const {
+      name,
+      section = "world",
+      zoom,
+      showZoom,
+      running,
+      modified,
+      appTheme
+    } = this.props;
+
+    updateMyAppTheme(appTheme);
 
     return (
       <Toolbar>
@@ -104,10 +121,16 @@ class AppToolbar extends Component {
             <PlusIcon />
           </ToolbarButton>
         </ToolbarButton>
+
         <ToolbarSpacer />
-        <ToolbarTitle>{name || "Untitled"} {modified && " (modified)"}</ToolbarTitle>
+        <ToolbarTitle>
+          {name || "Untitled"} {modified && " (modified)"}
+        </ToolbarTitle>
         <ToolbarSpacer />
         <ToolbarFixedSpacer style={{ width: 138 }} />
+        <ToolbarButton onClick={this.onUpdateTheme} title="Dark Theme">
+          {appTheme ? <SunIcon /> : <MoonIcon />}
+        </ToolbarButton>
         <ToolbarButton
           title="Open Project Folder"
           onClick={this.openProjectFolder}
@@ -153,6 +176,7 @@ function mapStateToProps(state) {
     name: state.project.present && state.project.present.name,
     section,
     zoom,
+    appTheme: state.editor.appTheme,
     showZoom: ["world", "sprites", "backgrounds", "ui"].indexOf(section) > -1,
     running: state.console.status === "running"
   };
@@ -165,7 +189,8 @@ const mapDispatchToProps = {
   zoomOut: actions.zoomOut,
   zoomReset: actions.zoomReset,
   buildGame: actions.buildGame,
-  openFolder: actions.openFolder
+  openFolder: actions.openFolder,
+  updateAppTheme: actions.updateAppTheme
 };
 
 export default connect(

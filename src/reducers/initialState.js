@@ -27,7 +27,8 @@ export default {
     sceneDragging: false,
     sceneDragX: 0,
     sceneDragY: 0,
-    uiVersion: 0
+    uiVersion: 0,
+    appTheme: false
   },
   navigation: {
     section: "world",
